@@ -91,13 +91,25 @@ module.exports = function (context) {
 	});
 };
 
+function formatRegion(locale){
+	var newLang = locale;
+	if (locale.indexOf("-") != -1){
+		var splitLocale = locale.split("-");
+		var lang = splitLocale[0];
+		var region = splitLocale[1];
+
+		newLang = lang + "-r" + region;
+	}
+	return newLang;
+}
+
 function getLocalStringXmlPath(context, lang) {
 	var resPath = getResPath(context);
 	var defaultLocale = getDefaultLocale();
 	return path.normalize(
 		path.join(
 			resPath,
-			"values" + (lang !== defaultLocale ? "-" + lang : ""),
+			"values" + (lang !== defaultLocale ? "-" + formatRegion(lang) : ""),
 			"strings.xml"
 		)
 	);
