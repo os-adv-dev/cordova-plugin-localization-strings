@@ -2,11 +2,9 @@ var fs = require("fs");
 var glob = require("glob").globSync;
 var path = require("path");
 
-function getTranslationPath(config, name) {
-	var matches = config.match(
-		new RegExp('name="' + name + '" value="(.*?)"', "i")
-	);
-	return (matches && matches[1]) || null;
+function getTranslationPath(context) {
+	var packageJson = require("../../fetch.json");
+	return packageJson[context.opts.plugin.id]?.variables?.TRANSLATION_PATH;
 }
 
 function getDefaultPath(context) {
@@ -26,7 +24,7 @@ module.exports = {
 		var providedTranslationPathPattern;
 		var providedTranslationPathRegex;
 		var config = fs.readFileSync("config.xml").toString();
-		var PATH = getTranslationPath(config, "TRANSLATION_PATH");
+		var PATH = getTranslationPath(context);
 
 		if (PATH == null) {
 			PATH = getDefaultPath(context);
