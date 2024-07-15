@@ -223,10 +223,7 @@ module.exports = function (context) {
 					"platforms",
 					"ios"
 				);
-				var projectFileApi = require(path.join(
-					platformPath,
-					"/cordova/lib/projectFile.js"
-				));
+				var projectFileApi = require(path.join('cordova-ios','lib','projectFile.js'));
 				projectFileApi.purgeProjectFileCache(platformPath);
 
 				resolve();
